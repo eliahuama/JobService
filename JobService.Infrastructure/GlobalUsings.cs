@@ -1,0 +1,10 @@
+global using JobService.Core.Models;
+global using File = JobService.Core.Models.File;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using AutoMapper;
+global using JobService.Core.DTOs;
+global using JobService.Infrastructure.DataAccess;
+global using AutoInterfaceAttributes;
+global using Microsoft.AspNetCore.Http;
+global using JobService.Infrastructure.Helpers;
