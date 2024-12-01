@@ -1,4 +1,4 @@
-﻿namespace ItVacancies.Controllers;
+﻿namespace JobService.Api.Controllers;
     [Route("api/[controller]")]
     [ApiController]
     
@@ -33,7 +33,8 @@
         public async Task<IActionResult> Create (JobDto jobDto)
         { 
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            
+
+            // jobDto.EmployerId = 1;
             var job = await _jobService.CreateJob(jobDto);
             return Ok(job);
         }

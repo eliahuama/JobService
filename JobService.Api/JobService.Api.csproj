@@ -33,4 +33,8 @@
       <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="file\" />
+    </ItemGroup>
+
 </Project>

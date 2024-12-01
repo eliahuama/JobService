@@ -1,4 +1,4 @@
-namespace ItVacancies.Controllers;
+namespace JobService.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 
