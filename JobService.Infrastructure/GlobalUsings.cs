@@ -8,3 +8,8 @@ global using JobService.Infrastructure.DataAccess;
 global using AutoInterfaceAttributes;
 global using Microsoft.AspNetCore.Http;
 global using JobService.Infrastructure.Helpers;
+global using Microsoft.Extensions.Configuration;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using Microsoft.IdentityModel.Tokens;

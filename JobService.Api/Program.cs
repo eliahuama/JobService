@@ -9,7 +9,7 @@ builder.Services.AddScoped<IResumeService, ResumeService>();
 builder.Services.AddScoped<IJobService, JobService.Infrastructure.Services.JobService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IApplicantService, ApplicantService>();
-// builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddCors(options =>
 {

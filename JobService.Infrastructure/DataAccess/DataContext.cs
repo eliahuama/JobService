@@ -8,6 +8,7 @@ namespace JobService.Infrastructure.DataAccess;
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Resume> Resumes { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<LocalUser> LocalUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -16,7 +17,16 @@ namespace JobService.Infrastructure.DataAccess;
             modelBuilder.ApplyConfiguration(new EmployerConfiguration());
             modelBuilder.ApplyConfiguration(new ResumeConfiguration());
             modelBuilder.ApplyConfiguration(new FileConfiguration());
+            modelBuilder.ApplyConfiguration(new LocalUsersConfiguration());
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    public class LocalUsersConfiguration : IEntityTypeConfiguration<LocalUser>
+    {
+        public void Configure(EntityTypeBuilder<LocalUser> builder)
+        {
+            builder.HasKey(x => x.Id);
         }
     }
     public class FileConfiguration : IEntityTypeConfiguration<File>
