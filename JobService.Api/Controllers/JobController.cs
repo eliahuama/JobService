@@ -1,7 +1,9 @@
-﻿namespace JobService.Api.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace JobService.Api.Controllers;
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
     public class JobController : Controller
     {
         private readonly IJobService _jobService;
@@ -29,7 +31,7 @@
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Create (JobDto jobDto)
         { 
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -40,7 +42,7 @@
         }
 
         [HttpPut("{id}")]
-
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Update(int id, JobDto jobDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -53,7 +55,7 @@
         }
 
         [HttpDelete("{id}")]
-
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Delete (int id)
         {
             var job = await _jobService.GetJob(id);

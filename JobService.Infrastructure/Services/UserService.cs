@@ -1,4 +1,4 @@
-namespace JobService.Infrastructure.Services;
+ namespace JobService.Infrastructure.Services;
 [AutoInterface]
 
 public class UserService :IUserService
@@ -9,7 +9,7 @@ public class UserService :IUserService
     public UserService(DataContext context, IConfiguration configuration)
     {
         _context = context;
-        secretKey = configuration.GetSection("ApiSettings")["Secret"];
+        secretKey = configuration.GetSection("Jwt")["Key"];
     }
 
     public async Task<bool> IsUserUnique(string username)
@@ -45,6 +45,8 @@ public class UserService :IUserService
                 new Claim(ClaimTypes.Role, user.Role)
             }),
             Expires = DateTime.UtcNow.AddDays(7),
+            Issuer = "JobService",
+            Audience = "YourAudience",
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
         };

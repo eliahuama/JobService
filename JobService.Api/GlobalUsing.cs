@@ -5,3 +5,7 @@ global using JobService.Infrastructure.Services;
 global using JobService.Core.DTOs;
 global using Microsoft.AspNetCore.Mvc;
 global using JobService.Infrastructure.Helpers;
+global using System.Text;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
