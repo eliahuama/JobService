@@ -45,7 +45,6 @@ public class EmployerController : Controller
         
         await _employerService.UpdateEmployer(id,employerDto);
         return NoContent();
-
     }
 
     [HttpDelete("{id}")]

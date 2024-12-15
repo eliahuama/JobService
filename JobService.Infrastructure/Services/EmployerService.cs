@@ -38,6 +38,7 @@ public class EmployerService : IEmployerService
         if (employer == null) throw new Exception($"Employer not found");
         employer.Name = employerDto.Name;
         employer.Contacts = employerDto.Contacts;
+        employer.Description = employerDto.Description;
         await _context.SaveChangesAsync();
     }
 

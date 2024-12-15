@@ -66,7 +66,7 @@ public class UserService : IUserService
         var employer = new Employer
         {
             Name = registrationRequestDto.Name,
-            Contacts = registrationRequestDto.Surname
+            Contacts = registrationRequestDto.Contacts
         };
 
         _context.Employers.Add(employer);
@@ -75,7 +75,7 @@ public class UserService : IUserService
         var user = new LocalUser
         {
             Name = registrationRequestDto.Name,
-            Surname = registrationRequestDto.Surname,
+            Contacts = registrationRequestDto.Contacts,
             UserName = registrationRequestDto.UserName,
             Password = registrationRequestDto.Password,
             Role = registrationRequestDto.Role,
