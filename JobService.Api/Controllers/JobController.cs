@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace JobService.Api.Controllers;
+﻿namespace JobService.Api.Controllers;
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -21,6 +19,13 @@ namespace JobService.Api.Controllers;
             return Ok(jobs);
         }
 
+        [HttpGet("employer/{employerId}")]
+        public async Task<IActionResult> GetJobsByEmployerId(int employerId)
+        {
+            var jobs = await _jobService.GetJobsByEmployerId(employerId);
+            return Ok(jobs);
+        }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetJob(int id)
         {
@@ -36,7 +41,13 @@ namespace JobService.Api.Controllers;
         { 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            // jobDto.EmployerId = 1;
+            var employerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (int.TryParse(employerId, out var employerIdInt)) 
+                jobDto.EmployerId = employerIdInt; 
+            else  
+                throw new Exception("Unable to convert Employer ID to int."); 
+
             var job = await _jobService.CreateJob(jobDto);
             return Ok(job);
         }

@@ -6,5 +6,6 @@ public class RegistrationRequestDto
     public string Surname { get; set; }
     public string UserName { get; set; }
     public string Password { get; set; }
-    public string Role { get; set; }
+    public RoleEnum Role { get; set; }
+    public int? EmployerId { get; set; }
 }

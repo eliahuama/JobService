@@ -38,6 +38,6 @@ public class UserController : ControllerBase
             return BadRequest("Username is already taken.");
         }
         var user = await _userService.Register(registrationRequestDto);
-        return CreatedAtAction(nameof(Register), user);
+        return Ok(user);
     }
 }

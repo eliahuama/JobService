@@ -17,7 +17,15 @@ public class JobService : IJobService
         var jobs = await _context.Jobs.ToListAsync();
         return _mapper.Map<IEnumerable<JobDto>>(jobs);
     }
-
+    
+    public async Task<IEnumerable<JobDto?>> GetJobsByEmployerId(int employerId) 
+    { 
+        var jobs =  await _context.Jobs
+        .Where(job => job.EmployerId == employerId) 
+        .ToListAsync();
+        return _mapper.Map<IEnumerable<JobDto>>(jobs);
+    }
+    
     public async Task<JobDto?> GetJob(int id)
     {
         var job = await _context.Jobs.FindAsync(id);

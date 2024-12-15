@@ -27,6 +27,9 @@ namespace JobService.Infrastructure.DataAccess;
         public void Configure(EntityTypeBuilder<LocalUser> builder)
         {
             builder.HasKey(x => x.Id);
+                builder.HasOne(x => x.Employer)
+                .WithOne(x => x.LocalUser)
+                .HasForeignKey<LocalUser>(x => x.EmployerId);
         }
     }
     public class FileConfiguration : IEntityTypeConfiguration<File>

@@ -154,6 +154,9 @@ namespace JobService.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("EmployerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -162,9 +165,8 @@ namespace JobService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -175,6 +177,9 @@ namespace JobService.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployerId")
+                        .IsUnique();
 
                     b.ToTable("LocalUsers");
                 });
@@ -251,6 +256,15 @@ namespace JobService.Infrastructure.Migrations
                     b.Navigation("Employer");
                 });
 
+            modelBuilder.Entity("JobService.Core.Models.LocalUser", b =>
+                {
+                    b.HasOne("JobService.Core.Models.Employer", "Employer")
+                        .WithOne("LocalUser")
+                        .HasForeignKey("JobService.Core.Models.LocalUser", "EmployerId");
+
+                    b.Navigation("Employer");
+                });
+
             modelBuilder.Entity("JobService.Core.Models.Resume", b =>
                 {
                     b.HasOne("JobService.Core.Models.Applicant", "Applicant")
@@ -270,6 +284,9 @@ namespace JobService.Infrastructure.Migrations
             modelBuilder.Entity("JobService.Core.Models.Employer", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("LocalUser")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("JobService.Core.Models.Resume", b =>

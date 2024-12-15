@@ -1,11 +1,11 @@
- namespace JobService.Infrastructure.Services;
-[AutoInterface]
+namespace JobService.Infrastructure.Services;
 
-public class UserService :IUserService
+[AutoInterface]
+public class UserService : IUserService
 {
     private readonly DataContext _context;
     private readonly string? secretKey;
-    
+
     public UserService(DataContext context, IConfiguration configuration)
     {
         _context = context;
@@ -31,18 +31,19 @@ public class UserService :IUserService
                 User = null
             };
         }
-        
+
         // generate JWT Token
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secretKey);
-        
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.EmployerId.ToString())
             }),
             Expires = DateTime.UtcNow.AddDays(7),
             Issuer = "JobService",
@@ -50,7 +51,7 @@ public class UserService :IUserService
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
         };
-        
+
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var loginResponseDto = new LoginResponseDto
         {
@@ -59,20 +60,31 @@ public class UserService :IUserService
         };
         return loginResponseDto;
     }
-    
+
     public async Task<LocalUser> Register(RegistrationRequestDto registrationRequestDto)
     {
+        var employer = new Employer
+        {
+            Name = registrationRequestDto.Name,
+            Contacts = registrationRequestDto.Surname
+        };
+
+        _context.Employers.Add(employer);
+        await _context.SaveChangesAsync();
+        
         var user = new LocalUser
         {
-          Name = registrationRequestDto.Name,
-          Surname = registrationRequestDto.Surname,
-          UserName = registrationRequestDto.UserName,
-          Password = registrationRequestDto.Password,
-          Role = registrationRequestDto.Role,
+            Name = registrationRequestDto.Name,
+            Surname = registrationRequestDto.Surname,
+            UserName = registrationRequestDto.UserName,
+            Password = registrationRequestDto.Password,
+            Role = registrationRequestDto.Role,
+            Employer = employer
         };
-        
+
         _context.LocalUsers.Add(user);
         await _context.SaveChangesAsync();
+
         user.Password = string.Empty;
         return user;
     }
