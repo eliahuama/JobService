@@ -66,7 +66,8 @@ public class UserService : IUserService
         var employer = new Employer
         {
             Name = registrationRequestDto.Name,
-            Contacts = registrationRequestDto.Contacts
+            Contacts = registrationRequestDto.Contacts,
+            Description = string.Empty
         };
 
         _context.Employers.Add(employer);
