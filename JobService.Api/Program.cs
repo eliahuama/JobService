@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters// TODO: add expiration and refresh token ability
     {
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
         policy.WithOrigins("http://localhost:63343")
-            .AllowAnyMethod()
+            .AllowAnyMethod() //TODO: deploy to amazon aws/azure and make it work.
             .AllowAnyHeader());
 });
 
@@ -76,12 +76,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString
-        ("DefaultConnection"));
+        ("DefaultConnection"));// TODO: use mssql server or postgres
 });
 
 var app = builder.Build();
 
-const string filePathUploads = "C:\\bguir/JobService\\JobService.Core\\file";
+const string filePathUploads = "C:\\bguir/JobService\\JobService.Core\\file"; // TODO: fix slashes and place in app.settings.
 if (!Directory.Exists(filePathUploads))
     Directory.CreateDirectory(filePathUploads);
 
